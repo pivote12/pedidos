@@ -14234,7 +14234,8 @@ module.exports = Cancel;
             client_id: "",
             clienteName: "",
             role_id: "",
-            pedido_id: ""
+            pedido_id: "",
+            result: []
         };
     },
     mounted: function mounted() {
@@ -14354,7 +14355,7 @@ module.exports = Cancel;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('pedidos/' + pedido.id, {}).then(function (response) {
 
                 _this4.clientes = response.data;
-                _this4.pedidos = response.data[me.client_id - 1];
+                _this4.pedidos = me.searchMethod(response.data, me.client_id);
                 //$(e.target).parents('tr').remove();
                 _this4.exito('Eliminado');
                 //console.log(response);
@@ -14413,7 +14414,7 @@ module.exports = Cancel;
             }).then(function (response) {
 
                 _this6.clientes = response.data;
-                _this6.pedidos = response.data[me.client_id - 1];
+                _this6.pedidos = me.searchMethod(response.data, me.client_id);
                 $(e.target).parents('tr').hide();
                 $(e.target).parents('.text').children('textarea').val('');
                 _this6.exito('Creado');
@@ -14471,6 +14472,11 @@ module.exports = Cancel;
             if (str == '') return true;
 
             return false;
+        },
+        searchMethod: function searchMethod(objects, client_id) {
+            for (var i = 0; i < objects.length; i++) {
+                if (objects[i].id == client_id) return objects[i];
+            }
         }
     }
 });

@@ -248,7 +248,8 @@
                 client_id : "",
                 clienteName:"",
                 role_id:"",
-                pedido_id:""
+                pedido_id:"",
+                result:[]
             }
         },
         mounted() {
@@ -373,7 +374,7 @@
                   .then(response => {
 
                       this.clientes = response.data;
-                      this.pedidos = response.data[me.client_id-1];
+                      this.pedidos = me.searchMethod(response.data,me.client_id);
                       //$(e.target).parents('tr').remove();
                       this.exito('Eliminado');
                       //console.log(response);
@@ -435,7 +436,7 @@
                   .then(response => {
 
                       this.clientes = response.data;
-                      this.pedidos = response.data[me.client_id-1];
+                      this.pedidos = me.searchMethod(response.data,me.client_id);
                       $(e.target).parents('tr').hide();
                       $(e.target).parents('.text').children('textarea').val('');
                       this.exito('Creado');
@@ -500,6 +501,12 @@
                 return true;
 
               return false;
+            },
+            searchMethod(objects,client_id){
+              for(var i=0; i<objects.length; i++) {
+                if(objects[i].id == client_id)
+                  return objects[i];
+              }
             }
         }
     }
